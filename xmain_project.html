@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Personalized Date Plan</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+        body {
+            font-family: 'Permanent Marker', cursive;
+            background: linear-gradient(135deg, #f0f4f7, #e2e8ec);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Hearts animation */
+        .heart {
+            position: absolute;
+            background-color: rgba(255, 192, 203, 0.6);
+            transform: rotate(-45deg);
+            animation: float 10s infinite linear;
+            width: 30px; height: 30px;
+            border-radius: 5px;8
+        }
+        .heart:before, .heart:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 192, 203, 0.6);
+            border-radius: 50%;
+        }
+        .heart:before { top: -50%; }
+        .heart:after { left: 50%; }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+            text-align: left;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #d14264;
+            text-align: center;
+            border-bottom: 3px dashed #d14264;
+            padding-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        /* Added a back button style */
+        .back-button {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 10px 15px;
+            background-color: #add8e6;
+            color: #333;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1em;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .back-button:hover {
+            background-color: #9acfea;
+            transform: scale(1.05);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        input {
+            padding: 15px;
+            border: 2px solid #ff69b4;
+            border-radius: 30px;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.2em;
+            background-color: #fffaf0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #add8e6;
+            box-shadow: 0 0 10px #add8e6;
+        }
+
+        .action-button {
+            padding: 15px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.5em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-button:hover {
+            background-color: #d14264;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .plan-block {
+            background-color: #fffaf0;
+            border-left: 5px solid #ff69b4;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 1.2em;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInBlock 0.5s forwards;
+        }
+
+        .activity-display {
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .activity-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-left: 5px solid #add8e6;
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInBlock 0.5s forwards;
+        }
+        
+        .activity-card h3 {
+            color: #d14264;
+            border-bottom: 2px dashed #ff69b4;
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        .navigation-buttons .action-button {
+            flex: 1;
+            font-size: 1.2em;
+        }
+
+        @keyframes fadeInBlock {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="xindex.html" class="back-button">⬅️ Back to Credits</a>
+        
+        <h1>Your Personalized Date Plan! 💕</h1>
+
+        <form id="plan-form">
+            <input type="text" id="location" name="location" placeholder="Where are you? (e.g., New York City)" required>
+            <input type="text" id="date_time" name="date_time" placeholder="When? (e.g., Friday night at 8 PM)" required>
+            <input type="text" id="mood" name="mood" placeholder="What's the mood? (e.g., romantic, adventurous)" required>
+            <button type="submit" id="generate-btn" class="action-button">Generate Plan</button>
+        </form>
+
+        <div id="output"></div>
+
+        <div id="activity-display" class="activity-display" style="display:none;">
+            <div id="current-activity-card" class="activity-card">
+                </div>
+            <div class="navigation-buttons">
+                <button id="prev-activity-btn" class="action-button" disabled>Previous Activity</button>
+                <button id="next-activity-btn" class="action-button" disabled>Next Activity</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let activities = [];
+        let currentActivityIndex = 0;
+
+        window.addEventListener('pageshow', () => {
+            document.getElementById('plan-form').reset();
+            document.getElementById('output').innerHTML = '';
+            document.getElementById('activity-display').style.display = 'none';
+            document.getElementById('generate-btn').disabled = false;
+            document.getElementById('generate-btn').textContent = 'Generate Plan';
+            activities = [];
+            currentActivityIndex = 0;
+        });
+
+        // Function to create heart elements
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.animationDuration = Math.random() * 10 + 5 + 's';
+            document.body.appendChild(heart);
+        }
+
+        for (let i = 0; i < 15; i++) {
+            createHeart();
+        }
+
+        const updateActivityDisplay = () => {
+            const currentActivityCard = document.getElementById('current-activity-card');
+            const prevBtn = document.getElementById('prev-activity-btn');
+            const nextBtn = document.getElementById('next-activity-btn');
+
+            if (activities.length > 0) {
+                currentActivityCard.innerHTML = activities[currentActivityIndex];
+                prevBtn.disabled = currentActivityIndex === 0;
+                nextBtn.disabled = currentActivityIndex === activities.length - 1;
+            } else {
+                currentActivityCard.innerHTML = "<p>No activities to display.</p>";
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+            }
+        };
+
+        document.getElementById('prev-activity-btn').addEventListener('click', () => {
+            if (currentActivityIndex > 0) {
+                currentActivityIndex--;
+                updateActivityDisplay();
+            }
+        });
+
+        document.getElementById('next-activity-btn').addEventListener('click', () => {
+            if (currentActivityIndex < activities.length - 1) {
+                currentActivityIndex++;
+                updateActivityDisplay();
+            }
+        });
+
+        document.getElementById('plan-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const form = e.target;
+            const location = form.location.value;
+            const dateTime = form.date_time.value;
+            const mood = form.mood.value;
+            
+            const outputElement = document.getElementById('output');
+            const activityDisplayElement = document.getElementById('activity-display');
+            const generateBtn = document.getElementById('generate-btn');
+
+            outputElement.innerHTML = '';
+            activityDisplayElement.style.display = 'none';
+            generateBtn.disabled = true;
+            generateBtn.textContent = 'Generating...';
+
+            try {
+                // IMPORTANT: This fetch requires a backend server set up to handle the API call.
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        location: location,
+                        date_time: dateTime,
+                        mood: mood,
+                    }),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const fullText = data.plan;
+
+                outputElement.innerHTML = '';
+                
+                const { marked } = await import('https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js');
+                
+                const rawSections = fullText.split(/(?=^##\s+)/m).map(s => s.trim()).filter(Boolean);
+
+                if (rawSections.length > 0) {
+                    const mainInfo = rawSections.shift();
+                    const mainBlock = document.createElement('div');
+                    mainBlock.classList.add('plan-block');
+                    mainBlock.innerHTML = marked.parse(mainInfo);
+                    outputElement.appendChild(mainBlock);
+                }
+                
+                activities = rawSections.map(section => marked.parse(section));
+                currentActivityIndex = 0;
+
+                if (activities.length > 0) {
+                    activityDisplayElement.style.display = 'flex';
+                    updateActivityDisplay();
+                } else {
+                    activityDisplayElement.style.display = 'none';
+                    outputElement.innerHTML += `<div class="plan-block">No detailed activities were generated.</div>`;
+                }
+                
+                generateBtn.disabled = false;
+                generateBtn.textContent = 'Generate Plan';
+
+            } catch (error) {
+                console.error('Caught error:', error);
+                outputElement.innerHTML = `<div class="plan-block">An error occurred: ${error.message}. Please try again.</div>`;
+                generateBtn.disabled = false;
+                generateBtn.textContent = 'Generate Plan';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Perfect Date Planner - Credits</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+        body {
+            font-family: 'Permanent Marker', cursive;
+            background: linear-gradient(135deg, #f0f4f7, #e2e8ec);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Hearts animation */
+        .heart {
+            position: absolute;
+            background-color: rgba(255, 192, 203, 0.6);
+            transform: rotate(-45deg);
+            animation: float 10s infinite linear;
+            width: 30px; height: 30px;
+            border-radius: 5px;
+        }
+        .heart:before, .heart:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 192, 203, 0.6);
+            border-radius: 50%;
+        }
+        .heart:before { top: -50%; }
+        .heart:after { left: 50%; }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+        }
+
+        .page-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            max-width: 650px; /* Slightly wider for quote */
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #d14264;
+            font-size: 3em;
+            margin-bottom: 20px;
+            border-bottom: 3px dashed #d14264;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #ff69b4;
+            font-size: 2em;
+            margin-top: 30px;
+        }
+        
+        .quote-box {
+            background-color: #fff0f5; /* Light pink background */
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 15px;
+            border-left: 5px solid #ff69b4;
+            font-size: 1.3em;
+            font-style: italic;
+            color: #555;
+            min-height: 60px; /* Ensure space for the quote */
+        }
+
+        .creators {
+            margin: 20px 0;
+            font-size: 1.5em;
+            line-height: 1.5;
+            color: #555;
+            list-style: none;
+            padding: 0;
+        }
+        .creators li {
+            margin: 5px 0;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .action-button {
+            padding: 15px 30px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.5em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 40px;
+        }
+
+        .action-button:hover {
+            background-color: #d14264;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">  
+        <h1>Project Credits ✨</h1>
+        
+        <div class="quote-box" id="love-quote">
+            </div>
+
+        <h2>The Perfect Date Planner Generator</h2>
+        
+        <ul class="creators">
+            <li>Created by: RENO JOBY RAI S1</li>
+            <li>And: AMRUTHA V.S RAI S1</li>
+        </ul>
+
+        <a href="xmain_project.html" class="action-button">NEXT: Start Planning! ➡️</a>
+    </div>
+    
+    <script>
+        // Array of romantic quotes
+        const quotes = [
+            "The best thing to hold onto in life is each other. - Audrey Hepburn",
+            "You know you're in love when you can't fall asleep because reality is finally better than your dreams. - Dr. Seuss",
+            "Love is not finding someone to live with. It's finding someone you can't live without. - Rafael Ortiz",
+            "We love the things we love for what they are. - Robert Frost",
+            "A successful relationship requires falling in love many times, always with the same person. - Mignon McLaughlin",
+            "Where there is great love, there are always miracles. - Willa Cather"
+        ];
+
+        // Function to display a random quote
+        function displayRandomQuote() {
+            const quoteElement = document.getElementById('love-quote');
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            quoteElement.textContent = quotes[randomIndex];
+        }
+
+        // Run the quote function on page load
+        displayRandomQuote();
+
+        // Hearts animation setup
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = Math.random() * 100 + 'vh';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.animationDuration = Math.random() * 10 + 5 + 's';
+            document.body.appendChild(heart);
+        }
+
+        for (let i = 0; i < 15; i++) {
+            createHeart();
+        }
+    </script>
+</body>
+</html>
