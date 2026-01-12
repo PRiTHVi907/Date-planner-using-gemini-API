@@ -1,0 +1,1 @@
+// This script is no longer needed as its content has been embedded into index.html.
